@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src='https://api.mapbox.com/mapbox-gl-js/v0.31.0/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v0.31.0/mapbox-gl.css' rel='stylesheet' />
+    </head>
+<body>
+{% extends 'base.html'%}
+{% block content %}   
+<h1>Maps</h1>
+<hr>
+{% for map in maps %}
+<h3>Name:</strong> {{map.name}}</h3>
+<p><strong><a href="/user/{{map.user.username}}/"> by {{map.user.username}}</a></strong></p>
+<p><strong>Left longitude</strong> {{map.left_longitude_val}}</p>
+<p><strong>Left latitude</strong> {{map.left_latitude_val}}</p>
+<p><strong>Right longitude</strong> {{map.right_longitude_val}}</p>
+<p><strong>Right latitude</strong> {{map.right_latitude_val}}</p>
+<hr>
+{% endfor %}
+<hr>
+    <h2>Add Map</h2>
+<form action="post_url/" method="post">
+    {% csrf_token %}
+    {{form.as_p}}
+    <input type="submit" value="Submit" />
+    
+<hr>
+{% endblock %}       
+</body>
+</html>

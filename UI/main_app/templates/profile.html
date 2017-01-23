@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src='https://api.mapbox.com/mapbox-gl-js/v0.31.0/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v0.31.0/mapbox-gl.css' rel='stylesheet' />
+    </head>
+<body>
+{% extends 'base.html'%}
+
+{% block content %}
+<h1>{{ username }}</h1>
+<div class="row">
+    
+{% for map in maps %}
+    <div class="col-md-4">
+        <a href="/map/{{map.id}}/"> 
+        <div class="panel-heading">
+            <h3 class="panel-title">{{map.name}}</h3>
+        </div>
+        </a>
+        
+
+{% endfor %}
+{% endblock %}  
+<hr>
+        
+</body>
+</html>

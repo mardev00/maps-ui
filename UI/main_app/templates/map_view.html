@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8' />
+    <title></title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.31.0/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.31.0/mapbox-gl.css' rel='stylesheet' />
+    <style>
+        body { margin:0; padding:0; }
+        #map { position:absolute; top:0; bottom:0; width:100%; height:50%}
+    </style>
+</head>
+<body>
+{% extends 'base.html'%}
+{% block content %} 
+<style>
+    #fit {
+        display: block;
+        position: relative;
+        margin: 0px auto;
+        width: 50%;
+        height: 40px;
+        padding: 10px;
+        border: none;
+        border-radius: 3px;
+        font-size: 12px;
+        text-align: center;
+        color: #fff;
+        background: #ee8a65;
+    }
+</style>
+<br/>
+<table width="80%">
+    
+    <tr>
+        <td>
+            
+<div id='map'></div>
+<button id='fit'>Save Map</button>
+<script>
+mapboxgl.accessToken = 'pk.eyJ1IjoiaXRkZXYiLCJhIjoiY2l5OWJkOHYzMDA5bjMyc3hnNHp4bzE2aCJ9.fqQe2yHmI11TuGDnD0SJ3g';
+var map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/mapbox/light-v9',
+    center: [-90.96, -0.47],
+    zoom: 8
+});
+
+fit.onclick = function(){
+    {{}}
+};
+
+
+map.on('load', function () {
+
+    // add source as a layer and apply some styles
+    map.addLayer({
+        "id": "symbols",
+        "type": "symbol",
+        "source": {
+            "type": "geojson",
+            "data": {
+                "type": "FeatureCollection",
+                "features": [
+                    {
+                        "type": "Feature",
+                        "properties": {},
+                        "geometry": {
+                            "type": "Point",
+                            "coordinates": [
+                                -91.395263671875,
+                                -0.9145729757782163
+
+                            ]
+                        }
+                    },
+                    {
+                        "type": "Feature",
+                        "properties": {},
+                        "geometry": {
+                            "type": "Point",
+                            "coordinates": [
+                                -90.32958984375,
+                                -0.6344474832838974
+                            ]
+                        }
+                    },
+                    {
+                        "type": "Feature",
+                        "properties": {},
+                        "geometry": {
+                            "type": "Point",
+                            "coordinates": [
+                                -91.34033203125,
+                                0.01647949196029245
+                            ]
+                        }
+                    }
+                ]
+            }
+        },
+        "layout": {
+            "icon-image": "rocket-15"
+        },
+        "paint": {}
+    });
+});
+
+map.on('click', function (e) {
+    // Use queryRenderedFeatures to get features at a click event's point
+    // Use layer option to avoid getting results from other layers
+    var features = map.queryRenderedFeatures(e.point, { layers: ['symbols'] });
+    // if there are features within the given radius of the click event,
+    // fly to the location of the click event
+    if (features.length) {
+        // Get coordinates from the symbol and center the map on those coordinates
+        map.flyTo({center: features[0].geometry.coordinates});
+        
+        
+    }
+});
+
+
+// Use the same approach as above to indicate that the symbols are clickable
+// by changing the cursor style to 'pointer'.
+map.on('mousemove', function (e) {
+    var features = map.queryRenderedFeatures(e.point, { layers: ['symbols'] });
+    map.getCanvas().style.cursor = features.length ? 'pointer' : '';
+    
+});
+</script>        </td>
+    </tr>
+</table>
+
+
+<table width="80%">
+    <tr><td colspan="2">{{map.name}}</td>
+    <tr>
+        <td><strong>Left longitude</strong> </td><td>{{map.left_longitude_val}}</td>
+    </tr>
+      <tr>
+        <td><strong>Left latitude</strong></td><td>{{map.left_latitude_val}}</td>
+    </tr>
+    </tr>
+      <tr>
+        <td><strong>Right longitude</strong></td><td>{{map.right_longitude_val}}</td>
+    </tr>
+    </tr>
+      <tr>
+        <td><strong>Right latitude</strong></td><td>{{map.right_latitude_val}}</td>
+    </tr>
+
+
+</table>
+
+<hr>
+{% endblock %}  
+</body>
+</html>
+
+
+
